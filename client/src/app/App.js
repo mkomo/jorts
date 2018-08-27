@@ -72,14 +72,14 @@ class App extends Component {
     this.props.history.push(redirectTo);
 
     notification[notificationType]({
-      message: 'Jorts App',
+      message: 'Jorts Auth',
       description: description,
     });
   }
 
   handleLogin() {
     notification.success({
-      message: 'Jorts App',
+      message: 'Jorts Auth',
       description: "You're successfully logged in.",
     });
     this.loadCurrentUser();

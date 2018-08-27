@@ -39,12 +39,12 @@ class LoginForm extends Component {
                 }).catch(error => {
                     if(error.status === 401) {
                         notification.error({
-                            message: 'Jorts App',
+                            message: 'Jorts Auth',
                             description: 'Your Username or Password is incorrect. Please try again!'
                         });
                     } else {
                         notification.error({
-                            message: 'Jorts App',
+                            message: 'Jorts Auth',
                             description: error.message || 'Sorry! Something went wrong. Please try again!'
                         });
                     }

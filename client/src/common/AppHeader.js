@@ -49,7 +49,7 @@ class AppHeader extends Component {
             <Header className="app-header">
             <div className="container">
               <div className="app-title" >
-                <Link to="/">Jorts App</Link>
+                <Link to="/">Jorts Auth</Link>
               </div>
               <Menu
                 className="app-menu"
