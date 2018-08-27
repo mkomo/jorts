@@ -3,13 +3,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.example</groupId>
-	<artifactId>polls</artifactId>
+	<groupId>com.mkomo</groupId>
+	<artifactId>jorts</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>polls</name>
-	<description>Polling App built with Spring Boot, Spring Security, MySQL and JWT</description>
+	<name>jorts</name>
+	<description>Basic boilerplate for authn and authz with jwt</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>

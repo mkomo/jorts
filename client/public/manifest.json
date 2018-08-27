@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "jorts",
+  "name": "Basic boilerplate for authn and authz with jwt",
   "icons": [
     {
       "src": "favicon.ico",
