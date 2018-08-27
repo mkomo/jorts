@@ -1,13 +1,25 @@
 package com.mkomo.jorts.model;
 
-import com.mkomo.jorts.model.audit.DateAudit;
-import org.hibernate.annotations.NaturalId;
-import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.HashSet;
-import java.util.Set;
+
+import org.hibernate.annotations.NaturalId;
+
+import com.mkomo.jorts.model.audit.DateAudit;
 
 /**
  * Created by rajeevkumarsingh on 01/08/17.
@@ -23,7 +35,12 @@ import java.util.Set;
         })
 })
 public class User extends DateAudit {
-    @Id
+    /**
+	 *
+	 */
+	private static final long serialVersionUID = 2517455419566908795L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

@@ -1,10 +1,11 @@
 package com.mkomo.jorts.model.audit;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import javax.persistence.MappedSuperclass;
+
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.LastModifiedBy;
 
-import javax.persistence.MappedSuperclass;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * Created by rajeevkumarsingh on 19/08/17.
@@ -17,7 +18,12 @@ import javax.persistence.MappedSuperclass;
 )
 public abstract class UserDateAudit extends DateAudit {
 
-    @CreatedBy
+    /**
+	 *
+	 */
+	private static final long serialVersionUID = 2265296250807560553L;
+
+	@CreatedBy
     private Long createdBy;
 
     @LastModifiedBy

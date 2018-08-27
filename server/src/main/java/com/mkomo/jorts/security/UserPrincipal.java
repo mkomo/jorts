@@ -1,18 +1,24 @@
 package com.mkomo.jorts.security;
 
-import com.mkomo.jorts.model.User;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.mkomo.jorts.model.User;
+
 public class UserPrincipal implements UserDetails {
-    private Long id;
+    /**
+	 *
+	 */
+	private static final long serialVersionUID = -2698188268299212287L;
+
+	private Long id;
 
     private String name;
 
