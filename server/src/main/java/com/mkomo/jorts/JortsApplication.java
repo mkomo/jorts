@@ -10,10 +10,10 @@ import java.util.TimeZone;
 
 @SpringBootApplication
 @EntityScan(basePackageClasses = {
-		PollsApplication.class,
+		JortsApplication.class,
 		Jsr310JpaConverters.class
 })
-public class PollsApplication {
+public class JortsApplication {
 
 	@PostConstruct
 	void init() {
@@ -21,6 +21,6 @@ public class PollsApplication {
 	}
 
 	public static void main(String[] args) {
-		SpringApplication.run(PollsApplication.class, args);
+		SpringApplication.run(JortsApplication.class, args);
 	}
 }

@@ -1,20 +1,21 @@
 package com.mkomo.jorts.controller;
 
-import com.mkomo.jorts.exception.ResourceNotFoundException;
-import com.mkomo.jorts.model.User;
-import com.mkomo.jorts.payload.*;
-import com.mkomo.jorts.repository.PollRepository;
-import com.mkomo.jorts.repository.UserRepository;
-import com.mkomo.jorts.repository.VoteRepository;
-import com.mkomo.jorts.security.UserPrincipal;
-import com.mkomo.jorts.service.PollService;
-import com.mkomo.jorts.security.CurrentUser;
-import com.mkomo.jorts.util.AppConstants;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.mkomo.jorts.exception.ResourceNotFoundException;
+import com.mkomo.jorts.model.User;
+import com.mkomo.jorts.payload.UserIdentityAvailability;
+import com.mkomo.jorts.payload.UserProfile;
+import com.mkomo.jorts.payload.UserSummary;
+import com.mkomo.jorts.repository.UserRepository;
+import com.mkomo.jorts.security.CurrentUser;
+import com.mkomo.jorts.security.UserPrincipal;
 
 @RestController
 @RequestMapping("/api")
@@ -22,17 +23,6 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private PollRepository pollRepository;
-
-    @Autowired
-    private VoteRepository voteRepository;
-
-    @Autowired
-    private PollService pollService;
-
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @GetMapping("/user/me")
     @PreAuthorize("hasRole('USER')")
@@ -58,29 +48,9 @@ public class UserController {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
 
-        long pollCount = pollRepository.countByCreatedBy(user.getId());
-        long voteCount = voteRepository.countByUserId(user.getId());
-
-        UserProfile userProfile = new UserProfile(user.getId(), user.getUsername(), user.getName(), user.getCreatedAt(), pollCount, voteCount);
+        UserProfile userProfile = new UserProfile(user.getId(), user.getUsername(), user.getName(), user.getCreatedAt());
 
         return userProfile;
-    }
-
-    @GetMapping("/users/{username}/polls")
-    public PagedResponse<PollResponse> getPollsCreatedBy(@PathVariable(value = "username") String username,
-                                                         @CurrentUser UserPrincipal currentUser,
-                                                         @RequestParam(value = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
-                                                         @RequestParam(value = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size) {
-        return pollService.getPollsCreatedBy(username, currentUser, page, size);
-    }
-
-
-    @GetMapping("/users/{username}/votes")
-    public PagedResponse<PollResponse> getPollsVotedBy(@PathVariable(value = "username") String username,
-                                                       @CurrentUser UserPrincipal currentUser,
-                                                       @RequestParam(value = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
-                                                       @RequestParam(value = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size) {
-        return pollService.getPollsVotedBy(username, currentUser, page, size);
     }
 
 }

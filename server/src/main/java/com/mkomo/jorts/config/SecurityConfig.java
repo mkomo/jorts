@@ -1,8 +1,5 @@
 package com.mkomo.jorts.config;
 
-import com.mkomo.jorts.security.CustomUserDetailsService;
-import com.mkomo.jorts.security.JwtAuthenticationEntryPoint;
-import com.mkomo.jorts.security.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +15,10 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import com.mkomo.jorts.security.CustomUserDetailsService;
+import com.mkomo.jorts.security.JwtAuthenticationEntryPoint;
+import com.mkomo.jorts.security.JwtAuthenticationFilter;
 
 
 /**
@@ -90,7 +91,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .permitAll()
                     .antMatchers("/api/user/checkUsernameAvailability", "/api/user/checkEmailAvailability")
                         .permitAll()
-                    .antMatchers(HttpMethod.GET, "/api/polls/**", "/api/users/**")
+                    .antMatchers(HttpMethod.GET, "/api/users/**")
                         .permitAll()
                     .anyRequest()
                         .authenticated();
