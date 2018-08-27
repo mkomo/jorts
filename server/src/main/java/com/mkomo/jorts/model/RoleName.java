@@ -3,7 +3,7 @@ package com.mkomo.jorts.model;
 /**
  * Created by rajeevkumarsingh on 07/12/17.
  */
-public enum  RoleName {
-    ROLE_USER,
-    ROLE_ADMIN
+public enum RoleName {
+	ROLE_USER,
+	ROLE_ADMIN
 }

@@ -13,35 +13,35 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @MappedSuperclass
 @JsonIgnoreProperties(
-        value = {"createdBy", "updatedBy"},
-        allowGetters = true
+		value = {"createdBy", "updatedBy"},
+		allowGetters = true
 )
 public abstract class UserDateAudit extends DateAudit {
 
-    /**
+	/**
 	 *
 	 */
 	private static final long serialVersionUID = 2265296250807560553L;
 
 	@CreatedBy
-    private Long createdBy;
+	private Long createdBy;
 
-    @LastModifiedBy
-    private Long updatedBy;
+	@LastModifiedBy
+	private Long updatedBy;
 
-    public Long getCreatedBy() {
-        return createdBy;
-    }
+	public Long getCreatedBy() {
+		return createdBy;
+	}
 
-    public void setCreatedBy(Long createdBy) {
-        this.createdBy = createdBy;
-    }
+	public void setCreatedBy(Long createdBy) {
+		this.createdBy = createdBy;
+	}
 
-    public Long getUpdatedBy() {
-        return updatedBy;
-    }
+	public Long getUpdatedBy() {
+		return updatedBy;
+	}
 
-    public void setUpdatedBy(Long updatedBy) {
-        this.updatedBy = updatedBy;
-    }
+	public void setUpdatedBy(Long updatedBy) {
+		this.updatedBy = updatedBy;
+	}
 }

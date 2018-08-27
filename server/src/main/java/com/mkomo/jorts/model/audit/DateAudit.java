@@ -15,36 +15,36 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(
-        value = {"createdAt", "updatedAt"},
-        allowGetters = true
+		value = {"createdAt", "updatedAt"},
+		allowGetters = true
 )
 public abstract class DateAudit implements Serializable {
 
-    /**
+	/**
 	 *
 	 */
 	private static final long serialVersionUID = 4334763501616883465L;
 
 	@CreatedDate
-    private Instant createdAt;
+	private Instant createdAt;
 
-    @LastModifiedDate
-    private Instant updatedAt;
+	@LastModifiedDate
+	private Instant updatedAt;
 
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
+	public Instant getCreatedAt() {
+		return createdAt;
+	}
 
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
-    }
+	public void setCreatedAt(Instant createdAt) {
+		this.createdAt = createdAt;
+	}
 
-    public Instant getUpdatedAt() {
-        return updatedAt;
-    }
+	public Instant getUpdatedAt() {
+		return updatedAt;
+	}
 
-    public void setUpdatedAt(Instant updatedAt) {
-        this.updatedAt = updatedAt;
-    }
+	public void setUpdatedAt(Instant updatedAt) {
+		this.updatedAt = updatedAt;
+	}
 
 }

@@ -1,12 +1,12 @@
 {"properties": [
   {
-    "name": "app.jwtSecret",
-    "type": "java.lang.String",
-    "description": "server side secret used to encrypt the jwt"
+	"name": "app.jwtSecret",
+	"type": "java.lang.String",
+	"description": "server side secret used to encrypt the jwt"
   },
   {
-    "name": "app.jwtExpirationInMs",
-    "type": "java.lang.String",
-    "description": "time in millis for jwt to expire"
+	"name": "app.jwtExpirationInMs",
+	"type": "java.lang.String",
+	"description": "time in millis for jwt to expire"
   }
 ]}
