@@ -9,9 +9,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 
 @Configuration
-public class WebMvcConfig implements WebMvcConfigurer {
+public class JortsMvcConfigurer implements WebMvcConfigurer {
 
-	private final long MAX_AGE_SECS = 3600;
+	private static final long MAX_AGE_SECONDS = 3600;
 
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
@@ -19,6 +19,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
 		registry.addMapping("/**")
 				.allowedOrigins("*")
 				.allowedMethods("HEAD", "OPTIONS", "GET", "POST", "PUT", "PATCH", "DELETE")
-				.maxAge(MAX_AGE_SECS);
+				.maxAge(getMaxAgeCors());
+
+	}
+
+	protected long getMaxAgeCors() {
+		return MAX_AGE_SECONDS;
 	}
 }
