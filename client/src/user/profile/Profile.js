@@ -83,7 +83,7 @@ class Profile extends Component {
                                     <div className="full-name">{this.state.user.name}</div>
                                     <div className="username">@{this.state.user.username}</div>
                                     <div className="user-joined">
-                                        Joined {formatDate(this.state.user.joinedAt)}
+                                        Joined {formatDate(this.state.user.createdAt)}
                                     </div>
                                 </div>
                             </div>

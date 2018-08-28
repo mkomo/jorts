@@ -26,7 +26,6 @@ import com.mkomo.jorts.model.User;
 import com.mkomo.jorts.payload.ApiResponse;
 import com.mkomo.jorts.payload.JwtAuthenticationResponse;
 import com.mkomo.jorts.payload.LoginRequest;
-import com.mkomo.jorts.payload.SignUpRequest;
 import com.mkomo.jorts.repository.RoleRepository;
 import com.mkomo.jorts.repository.UserRepository;
 import com.mkomo.jorts.security.JwtTokenProvider;
@@ -70,20 +69,16 @@ public class AuthController {
 	}
 
 	@PostMapping("/signup")
-	public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
-		if(userRepository.existsByUsername(signUpRequest.getUsername())) {
+	public ResponseEntity<?> registerUser(@Valid @RequestBody User user) {
+		if(userRepository.existsByUsername(user.getUsername())) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
 					new ApiResponse(false, "Username is already taken!"));
 		}
 
-		if(userRepository.existsByEmail(signUpRequest.getEmail())) {
+		if(userRepository.existsByEmail(user.getEmail())) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
 					new ApiResponse(false, "Email Address already in use!"));
 		}
-
-		// Creating user's account
-		User user = new User(signUpRequest.getName(), signUpRequest.getUsername(),
-				signUpRequest.getEmail(), signUpRequest.getPassword());
 
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 

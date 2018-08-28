@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mkomo.jorts.exception.ResourceNotFoundException;
 import com.mkomo.jorts.model.User;
 import com.mkomo.jorts.payload.UserIdentityAvailability;
-import com.mkomo.jorts.payload.UserProfile;
-import com.mkomo.jorts.payload.UserSummary;
 import com.mkomo.jorts.repository.UserRepository;
 import com.mkomo.jorts.security.CurrentUser;
 import com.mkomo.jorts.security.UserPrincipal;
@@ -26,9 +24,8 @@ public class UserController {
 
 	@GetMapping("/user/me")
 	@PreAuthorize("hasRole('USER')")
-	public UserSummary getCurrentUser(@CurrentUser UserPrincipal currentUser) {
-		UserSummary userSummary = new UserSummary(currentUser.getId(), currentUser.getUsername(), currentUser.getName());
-		return userSummary;
+	public UserPrincipal getCurrentUser(@CurrentUser UserPrincipal user) {
+		return user;
 	}
 
 	@GetMapping("/user/checkUsernameAvailability")
@@ -44,13 +41,11 @@ public class UserController {
 	}
 
 	@GetMapping("/users/{username}")
-	public UserProfile getUserProfile(@PathVariable(value = "username") String username) {
+	public UserPrincipal getUserProfile(@PathVariable(value = "username") String username) {
 		User user = userRepository.findByUsername(username)
 				.orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
 
-		UserProfile userProfile = new UserProfile(user.getId(), user.getUsername(), user.getName(), user.getCreatedAt());
-
-		return userProfile;
+		return UserPrincipal.create(user);
 	}
 
 }

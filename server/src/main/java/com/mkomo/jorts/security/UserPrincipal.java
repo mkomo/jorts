@@ -1,5 +1,6 @@
 package com.mkomo.jorts.security;
 
+import java.time.Instant;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -12,14 +13,18 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mkomo.jorts.model.User;
 
+import lombok.Getter;
+
 public class UserPrincipal implements UserDetails {
 	/**
 	 *
 	 */
 	private static final long serialVersionUID = -2698188268299212287L;
 
+	@Getter
 	private Long id;
 
+	@Getter
 	private String name;
 
 	private String username;
@@ -30,14 +35,19 @@ public class UserPrincipal implements UserDetails {
 	@JsonIgnore
 	private String password;
 
+	@JsonIgnore
 	private Collection<? extends GrantedAuthority> authorities;
 
-	public UserPrincipal(Long id, String name, String username, String email, String password, Collection<? extends GrantedAuthority> authorities) {
+	@Getter
+	private Instant createdAt;
+
+	private UserPrincipal(Long id, String name, String username, String email, String password, Instant createdAt, Collection<? extends GrantedAuthority> authorities) {
 		this.id = id;
 		this.name = name;
 		this.username = username;
 		this.email = email;
 		this.password = password;
+		this.createdAt = createdAt;
 		this.authorities = authorities;
 	}
 
@@ -52,20 +62,9 @@ public class UserPrincipal implements UserDetails {
 				user.getUsername(),
 				user.getEmail(),
 				user.getPassword(),
+				user.getCreatedAt(),
 				authorities
 		);
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public String getEmail() {
-		return email;
 	}
 
 	@Override
@@ -113,7 +112,6 @@ public class UserPrincipal implements UserDetails {
 
 	@Override
 	public int hashCode() {
-
 		return Objects.hash(id);
 	}
 }
