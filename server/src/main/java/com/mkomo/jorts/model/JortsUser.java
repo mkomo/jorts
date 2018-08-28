@@ -1,7 +1,9 @@
 package com.mkomo.jorts.model;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,21 +20,20 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.NaturalId;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import com.mkomo.jorts.config.JortsFieldConfig;
 import com.mkomo.jorts.model.audit.DateAudit;
+import com.mkomo.jorts.security.UserPrincipal;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-/**
- * Created by rajeevkumarsingh on 01/08/17.
- */
-
+@Entity
 @Data
 @EqualsAndHashCode(callSuper=true)
-@Entity
-@Table(name = "users", uniqueConstraints = {
+@Table(uniqueConstraints = {
 		@UniqueConstraint(columnNames = {
 			"username"
 		}),
@@ -40,16 +41,18 @@ import lombok.EqualsAndHashCode;
 			"email"
 		})
 })
-public class User extends DateAudit {
+public class JortsUser extends DateAudit{
+
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 2517455419566908795L;
+	private static final long serialVersionUID = -6088080624044945571L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	//TODO move this to non-jorts profile
 	@NotBlank
 	@Size(max = JortsFieldConfig.USER_MAX_NAME_LENGTH, min = JortsFieldConfig.USER_MIN_NAME_LENGTH)
 	private String name;
@@ -58,6 +61,7 @@ public class User extends DateAudit {
 	@Size(max = JortsFieldConfig.USER_MAX_USERNAME_LENGTH, min = JortsFieldConfig.USER_MIN_USERNAME_LENGTH)
 	private String username;
 
+	//TODO remove this in favor of much more general identity table.
 	@NaturalId
 	@NotBlank
 	@Size(max = JortsFieldConfig.USER_MAX_EMAIL_LENGTH, min = JortsFieldConfig.USER_MIN_EMAIL_LENGTH)
@@ -74,14 +78,21 @@ public class User extends DateAudit {
 			inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
 
-	public User() {
+	public UserPrincipal asUserPrincipal() {
+		JortsUser user = this;
+		List<GrantedAuthority> authorities = user.getRoles().stream().map(role ->
+				new SimpleGrantedAuthority(role.getName().name())
+		).collect(Collectors.toList());
 
+		return new UserPrincipal(
+				user.getId(),
+				user.getName(),
+				user.getUsername(),
+				user.getEmail(),
+				user.getPassword(),
+				user.getCreatedAt(),
+				authorities
+		);
 	}
 
-	public User(String name, String username, String email, String password) {
-		this.name = name;
-		this.username = username;
-		this.email = email;
-		this.password = password;
-	}
 }

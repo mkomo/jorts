@@ -12,6 +12,9 @@ const request = (options) => {
     const defaults = {headers: headers};
     options = Object.assign({}, defaults, options);
 
+//TODO unset token if the token is bad
+//TODO get all constants from api
+
     return fetch(options.url, options)
     .then(response =>
         response.json().then(json => {

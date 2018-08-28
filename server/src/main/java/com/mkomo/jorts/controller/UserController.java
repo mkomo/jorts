@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mkomo.jorts.exception.ResourceNotFoundException;
-import com.mkomo.jorts.model.User;
+import com.mkomo.jorts.model.JortsUser;
 import com.mkomo.jorts.payload.UserIdentityAvailability;
 import com.mkomo.jorts.repository.UserRepository;
 import com.mkomo.jorts.security.CurrentUser;
@@ -42,10 +42,10 @@ public class UserController {
 
 	@GetMapping("/users/{username}")
 	public UserPrincipal getUserProfile(@PathVariable(value = "username") String username) {
-		User user = userRepository.findByUsername(username)
+		JortsUser user = userRepository.findByUsername(username)
 				.orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
 
-		return UserPrincipal.create(user);
+		return user.asUserPrincipal();
 	}
 
 }

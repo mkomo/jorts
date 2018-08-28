@@ -20,9 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.mkomo.jorts.exception.AppException;
+import com.mkomo.jorts.model.JortsUser;
 import com.mkomo.jorts.model.Role;
 import com.mkomo.jorts.model.RoleName;
-import com.mkomo.jorts.model.User;
 import com.mkomo.jorts.payload.ApiResponse;
 import com.mkomo.jorts.payload.JwtAuthenticationResponse;
 import com.mkomo.jorts.payload.LoginRequest;
@@ -69,7 +69,7 @@ public class AuthController {
 	}
 
 	@PostMapping("/signup")
-	public ResponseEntity<?> registerUser(@Valid @RequestBody User user) {
+	public <T extends JortsUser> ResponseEntity<?> registerUser(@Valid @RequestBody T user) {
 		if(userRepository.existsByUsername(user.getUsername())) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
 					new ApiResponse(false, "Username is already taken!"));
@@ -87,7 +87,7 @@ public class AuthController {
 
 		user.setRoles(Collections.singleton(userRole));
 
-		User result = userRepository.save(user);
+		JortsUser result = userRepository.save(user);
 
 		URI location = ServletUriComponentsBuilder
 				.fromCurrentContextPath().path("/users/{username}")
